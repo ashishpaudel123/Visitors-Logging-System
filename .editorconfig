@@ -1,0 +1,8 @@
+# EditorConfig to prevent JSP formatting issues
+root = true
+
+[*.jsp]
+insert_final_newline = false
+trim_trailing_whitespace = false
+# Disable auto-formatting for JSP files
+max_line_length = off
