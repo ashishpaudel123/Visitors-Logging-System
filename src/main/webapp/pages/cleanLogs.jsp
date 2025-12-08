@@ -1,4 +1,30 @@
-<%@ page import="com.visitor.system.dao.VisitorDAO" %> <% // Security check - get admin ID from session Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } // Get only this admin's visitor counts VisitorDAO dao = new VisitorDAO(); int totalVisitors = dao.getTotalVisitorCount(adminId); String daysParam = request.getParameter("days"); int days = 30; // default try { if (daysParam != null && !daysParam.isEmpty()) { days = Integer.parseInt(daysParam); } } catch (NumberFormatException e) { days = 30; } int oldVisitors = dao.getOldVisitorCount(days, adminId); String cleaned = request.getParameter("cleaned"); String deletedCountParam = request.getParameter("count"); %>
+<%@ page import="com.visitor.system.dao.VisitorDAO" %>
+<%
+// Security check - get admin ID from session
+Integer adminId = (Integer) session.getAttribute("adminId");
+if (adminId == null) {
+    response.sendRedirect(request.getContextPath() + "/login");
+    return;
+}
+
+// Get only this admin's visitor counts
+VisitorDAO dao = new VisitorDAO();
+int totalVisitors = dao.getTotalVisitorCount(adminId);
+
+String daysParam = request.getParameter("days");
+int days = 30; // default
+try {
+    if (daysParam != null && !daysParam.isEmpty()) {
+        days = Integer.parseInt(daysParam);
+    }
+} catch (NumberFormatException e) {
+    days = 30;
+}
+
+int oldVisitors = dao.getOldVisitorCount(days, adminId);
+String cleaned = request.getParameter("cleaned");
+String deletedCountParam = request.getParameter("count");
+%>
 <!DOCTYPE html>
 <html class="light" lang="en">
   <head>

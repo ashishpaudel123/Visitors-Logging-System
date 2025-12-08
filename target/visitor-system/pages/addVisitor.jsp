@@ -1,4 +1,11 @@
-<% // Security check - ensure user is logged in Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } %>
+<%
+// Security check - ensure user is logged in
+Integer adminId = (Integer) session.getAttribute("adminId");
+if (adminId == null) {
+    response.sendRedirect(request.getContextPath() + "/login");
+    return;
+}
+%>
 <!DOCTYPE html>
 <html class="light" lang="en">
   <head>

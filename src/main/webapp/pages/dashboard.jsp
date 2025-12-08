@@ -1,8 +1,22 @@
-<%@ page import="com.visitor.system.dao.VisitorDAO" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="java.util.List" %> <% // Security check - get admin ID from session Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } // Get only this admin's visitors VisitorDAO dao = new VisitorDAO(); List<Visitor>
-  recentVisitors = dao.getVisitorsByAdmin(adminId); int totalVisitors = recentVisitors.size(); List<Visitor>
-    displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subList(0, 5) : recentVisitors; %>
-    <!DOCTYPE html>
-    <html class="light" lang="en">
+<%@ page import="com.visitor.system.dao.VisitorDAO" %>
+<%@ page import="com.visitor.system.model.Visitor" %>
+<%@ page import="java.util.List" %>
+<%
+// Security check - get admin ID from session
+Integer adminId = (Integer) session.getAttribute("adminId");
+if (adminId == null) {
+    response.sendRedirect(request.getContextPath() + "/login");
+    return;
+}
+
+// Get only this admin's visitors
+VisitorDAO dao = new VisitorDAO();
+List<Visitor> recentVisitors = dao.getVisitorsByAdmin(adminId);
+int totalVisitors = recentVisitors.size();
+List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subList(0, 5) : recentVisitors;
+%>
+<!DOCTYPE html>
+<html class="light" lang="en">
       <head>
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />

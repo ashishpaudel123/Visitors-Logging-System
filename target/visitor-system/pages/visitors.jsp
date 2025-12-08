@@ -1,7 +1,21 @@
-<%@ page import="java.util.List" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="com.visitor.system.dao.VisitorDAO" %> <% // Security check - get admin ID from session Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } // Get only this admin's visitors VisitorDAO dao = new VisitorDAO(); List<Visitor>
-  visitors = dao.getVisitorsByAdmin(adminId); int serialNumber = 1; %>
-  <!DOCTYPE html>
-  <html class="light" lang="en">
+<%@ page import="java.util.List" %>
+<%@ page import="com.visitor.system.model.Visitor" %>
+<%@ page import="com.visitor.system.dao.VisitorDAO" %>
+<%
+// Security check - get admin ID from session
+Integer adminId = (Integer) session.getAttribute("adminId");
+if (adminId == null) {
+    response.sendRedirect(request.getContextPath() + "/login");
+    return;
+}
+
+// Get only this admin's visitors
+VisitorDAO dao = new VisitorDAO();
+List<Visitor> visitors = dao.getVisitorsByAdmin(adminId);
+int serialNumber = 1;
+%>
+<!DOCTYPE html>
+<html class="light" lang="en">
     <head>
       <meta charset="utf-8" />
       <meta content="width=device-width, initial-scale=1.0" name="viewport" />
