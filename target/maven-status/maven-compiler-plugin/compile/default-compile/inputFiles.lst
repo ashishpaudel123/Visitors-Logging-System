@@ -1,6 +1,12 @@
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/dao/AdminDAO.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/dao/VisitorDAO.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/filter/AuthFilter.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/model/Admin.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/model/Visitor.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/AddVisitorServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/CleanLogsServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/ListVisitorsServlet.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/LoginServlet.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/LogoutServlet.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/RegisterServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/utils/DBConnection.java

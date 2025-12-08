@@ -1,5 +1,5 @@
-<%@ page import="java.util.List" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="com.visitor.system.dao.VisitorDAO" %> <% VisitorDAO dao = new VisitorDAO(); List<Visitor>
-  visitors = dao.getVisitors(); int serialNumber = 1; %>
+<%@ page import="java.util.List" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="com.visitor.system.dao.VisitorDAO" %> <% // Security check - get admin ID from session Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } // Get only this admin's visitors VisitorDAO dao = new VisitorDAO(); List<Visitor>
+  visitors = dao.getVisitorsByAdmin(adminId); int serialNumber = 1; %>
   <!DOCTYPE html>
   <html class="light" lang="en">
     <head>

@@ -7,6 +7,16 @@ import java.io.IOException;
 
 public class CleanLogsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        // Get admin ID from session
+        HttpSession session = req.getSession(false);
+        if (session == null || session.getAttribute("adminId") == null) {
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        int adminId = (Integer) session.getAttribute("adminId");
+
+        // Get days parameter
         String daysParam = req.getParameter("days");
         int days = 30; // default
 
@@ -18,8 +28,9 @@ public class CleanLogsServlet extends HttpServlet {
             days = 30;
         }
 
+        // Delete only this admin's old visitors
         VisitorDAO dao = new VisitorDAO();
-        int deletedCount = dao.deleteOldVisitors(days);
+        int deletedCount = dao.deleteOldVisitors(days, adminId);
 
         res.sendRedirect(
                 req.getContextPath() + "/pages/cleanLogs.jsp?cleaned=1&days=" + days + "&count=" + deletedCount);

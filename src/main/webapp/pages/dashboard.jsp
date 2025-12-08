@@ -1,5 +1,5 @@
-<%@ page import="com.visitor.system.dao.VisitorDAO" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="java.util.List" %> <% VisitorDAO dao = new VisitorDAO(); List<Visitor>
-  recentVisitors = dao.getVisitors(); int totalVisitors = recentVisitors.size(); List<Visitor>
+<%@ page import="com.visitor.system.dao.VisitorDAO" %> <%@ page import="com.visitor.system.model.Visitor" %> <%@ page import="java.util.List" %> <% // Security check - get admin ID from session Integer adminId = (Integer) session.getAttribute("adminId"); if (adminId == null) { response.sendRedirect(request.getContextPath() + "/login"); return; } // Get only this admin's visitors VisitorDAO dao = new VisitorDAO(); List<Visitor>
+  recentVisitors = dao.getVisitorsByAdmin(adminId); int totalVisitors = recentVisitors.size(); List<Visitor>
     displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subList(0, 5) : recentVisitors; %>
     <!DOCTYPE html>
     <html class="light" lang="en">
@@ -65,15 +65,19 @@
               </div>
             </nav>
             <div class="p-4 border-t border-slate-200 dark:border-slate-800">
-              <div class="flex items-center gap-3">
+              <div class="flex items-center gap-3 mb-4">
                 <div class="bg-primary/10 rounded-full size-10 flex items-center justify-center">
                   <span class="material-symbols-outlined text-primary">person</span>
                 </div>
                 <div class="flex flex-col">
-                  <p class="text-slate-900 dark:text-white text-sm font-medium leading-normal">Admin User</p>
-                  <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal">admin@example.com</p>
+                  <p class="text-slate-900 dark:text-white text-sm font-medium leading-normal"><%= session.getAttribute("adminUsername") != null ? session.getAttribute("adminUsername") : "Admin User" %></p>
+                  <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal"><%= session.getAttribute("adminEmail") != null ? session.getAttribute("adminEmail") : "admin@example.com" %></p>
                 </div>
               </div>
+              <a href="<%= request.getContextPath() %>/logout" class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                <span class="material-symbols-outlined text-base">logout</span>
+                <span class="text-sm font-medium">Logout</span>
+              </a>
             </div>
           </aside>
 
