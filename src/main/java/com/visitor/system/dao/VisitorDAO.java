@@ -145,4 +145,62 @@ public class VisitorDAO {
         }
         return false;
     }
+
+    /**
+     * Get filtered visitors for a specific admin with search and purpose filter
+     * 
+     * @param adminId       The ID of the admin whose visitors to retrieve
+     * @param searchTerm    Search term for name or phone (can be null or empty)
+     * @param purposeFilter Purpose to filter by (can be null, empty, or "all")
+     * @return List of filtered visitors belonging to this admin
+     */
+    public List<Visitor> getFilteredVisitors(int adminId, String searchTerm, String purposeFilter) {
+        List<Visitor> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM visitors WHERE admin_id = ?");
+        
+        boolean hasSearch = searchTerm != null && !searchTerm.trim().isEmpty();
+        boolean hasPurpose = purposeFilter != null && !purposeFilter.trim().isEmpty() 
+                             && !"all".equalsIgnoreCase(purposeFilter);
+        
+        if (hasSearch) {
+            sql.append(" AND (name LIKE ? OR phone LIKE ?)");
+        }
+        
+        if (hasPurpose) {
+            sql.append(" AND purpose = ?");
+        }
+        
+        sql.append(" ORDER BY entry_time DESC");
+        
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql.toString())) {
+            
+            int paramIndex = 1;
+            ps.setInt(paramIndex++, adminId);
+            
+            if (hasSearch) {
+                String searchPattern = "%" + searchTerm.trim() + "%";
+                ps.setString(paramIndex++, searchPattern);
+                ps.setString(paramIndex++, searchPattern);
+            }
+            
+            if (hasPurpose) {
+                ps.setString(paramIndex++, purposeFilter.trim());
+            }
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Visitor(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("purpose"),
+                        rs.getString("entry_time"),
+                        rs.getInt("admin_id")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
