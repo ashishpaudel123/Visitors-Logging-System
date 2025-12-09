@@ -124,6 +124,31 @@ if (organizationType != null && !organizationType.isEmpty()) {
             </div>
 
             <div class="bg-white dark:bg-slate-800/50 p-6 sm:p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700/50 mt-4">
+              <% 
+              String error = request.getParameter("error");
+              if ("invalid_phone".equals(error)) { 
+              %>
+              <div class="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded-lg p-4 mb-6">
+                <div class="flex items-center">
+                  <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-3">error</span>
+                  <p class="text-red-700 dark:text-red-300 text-sm font-medium">Invalid phone number. Please enter exactly 10 digits.</p>
+                </div>
+              </div>
+              <% } else if ("invalid_purpose".equals(error)) { %>
+              <div class="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded-lg p-4 mb-6">
+                <div class="flex items-center">
+                  <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-3">error</span>
+                  <p class="text-red-700 dark:text-red-300 text-sm font-medium">Invalid purpose selected. Please try again.</p>
+                </div>
+              </div>
+              <% } else if ("1".equals(error)) { %>
+              <div class="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded-lg p-4 mb-6">
+                <div class="flex items-center">
+                  <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-3">error</span>
+                  <p class="text-red-700 dark:text-red-300 text-sm font-medium">Failed to add visitor. Please try again.</p>
+                </div>
+              </div>
+              <% } %>
               <form method="post" action="../addVisitor" class="flex flex-col gap-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <label class="flex flex-col flex-1">
@@ -139,11 +164,12 @@ if (organizationType != null && !organizationType.isEmpty()) {
                   <label class="flex flex-col flex-1">
                     <p class="text-slate-800 dark:text-slate-200 text-sm font-medium leading-normal pb-2">Phone Number</p>
                     <div class="flex w-full flex-1 items-stretch rounded-lg">
-                      <input name="phone" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="+1 (555) 000-0000" />
+                      <input name="phone" required type="tel" maxlength="10" pattern="[0-9]{10}" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="9876543210" />
                       <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center pr-[15px] rounded-r-lg border-l-0">
                         <span class="material-symbols-outlined text-lg">phone</span>
                       </div>
                     </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">Enter 10-digit phone number (numbers only)</p>
                   </label>
                 </div>
 

@@ -33,6 +33,12 @@ public class AddVisitorServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String purpose = req.getParameter("purpose");
         
+        // Validate phone number - must be exactly 10 digits
+        if (phone == null || !phone.matches("^[0-9]{10}$")) {
+            res.sendRedirect(req.getContextPath() + "/pages/addVisitor.jsp?error=invalid_phone");
+            return;
+        }
+        
         // Validate that the purpose is valid for this organization
         List<String> validPurposes = OrganizationPurposeHelper.getPurposesForOrganization(organizationType);
         if (!validPurposes.contains(purpose)) {
