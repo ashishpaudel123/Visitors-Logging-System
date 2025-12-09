@@ -14,6 +14,7 @@ VisitorDAO dao = new VisitorDAO();
 List<Visitor> recentVisitors = dao.getVisitorsByAdmin(adminId);
 int totalVisitors = recentVisitors.size();
 int todayVisitors = dao.getTodayVisitorCount(adminId);
+int recentEntries = dao.getRecentEntriesCount(adminId);
 List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subList(0, 5) : recentVisitors;
 %>
 <!DOCTYPE html>
@@ -146,7 +147,8 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
                   </div>
                   <div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
                     <p class="text-slate-600 dark:text-slate-300 text-base font-medium leading-normal">Recent Entries</p>
-                    <p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight"><%= displayVisitors.size() %></p>
+                    <p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight"><%= recentEntries %></p>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Last 60 minutes</p>
                   </div>
                   <div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
                     <p class="text-slate-600 dark:text-slate-300 text-base font-medium leading-normal">System Status</p>

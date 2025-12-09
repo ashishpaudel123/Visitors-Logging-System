@@ -101,6 +101,27 @@ public class VisitorDAO {
     }
 
     /**
+     * Get count of visitors added in the last 60 minutes for a specific admin
+     * 
+     * @param adminId The ID of the admin
+     * @return Count of visitors added in the last 60 minutes
+     */
+    public int getRecentEntriesCount(int adminId) {
+        String sql = "SELECT COUNT(*) as total FROM visitors WHERE admin_id = ? AND entry_time >= NOW() - INTERVAL 60 MINUTE";
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, adminId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
      * Get total visitor count for a specific admin only
      * 
      * @param adminId The ID of the admin
