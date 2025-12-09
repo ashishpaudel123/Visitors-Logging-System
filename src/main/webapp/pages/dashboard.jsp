@@ -76,6 +76,10 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
                   <span class="material-symbols-outlined">delete_sweep</span>
                   <p class="text-sm font-medium">Clean Old Logs</p>
                 </a>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/settings">
+                  <span class="material-symbols-outlined">settings</span>
+                  <p class="text-sm font-medium">Settings</p>
+                </a>
               </div>
             </nav>
             <div class="p-4 border-t border-slate-200 dark:border-slate-800">

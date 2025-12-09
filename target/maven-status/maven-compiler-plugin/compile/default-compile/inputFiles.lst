@@ -9,4 +9,6 @@
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/LoginServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/LogoutServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/RegisterServlet.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/servlet/SettingsServlet.java
 /Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/utils/DBConnection.java
+/Users/ashishpaudel/Desktop/VisitorEntrySystemWeb/src/main/java/com/visitor/system/utils/OrganizationPurposeHelper.java

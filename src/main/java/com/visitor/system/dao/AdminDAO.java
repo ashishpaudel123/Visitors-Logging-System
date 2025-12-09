@@ -119,4 +119,54 @@ public class AdminDAO {
 
         return false;
     }
+
+    /**
+     * Get the organization type for a specific admin
+     * 
+     * @param adminId The ID of the admin
+     * @return The organization type, or null if not set
+     */
+    public String getOrganizationType(int adminId) {
+        String query = "SELECT organization_type FROM admins WHERE id = ?";
+
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, adminId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("organization_type");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
+     * Update the organization type for a specific admin
+     * 
+     * @param adminId          The ID of the admin
+     * @param organizationType The organization type to set
+     * @return true if update successful, false otherwise
+     */
+    public boolean updateOrganizationType(int adminId, String organizationType) {
+        String query = "UPDATE admins SET organization_type = ? WHERE id = ?";
+
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, organizationType);
+            ps.setInt(2, adminId);
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

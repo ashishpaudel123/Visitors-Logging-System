@@ -1,9 +1,20 @@
+<%@ page import="com.visitor.system.dao.AdminDAO" %>
+<%@ page import="com.visitor.system.utils.OrganizationPurposeHelper" %>
+<%@ page import="java.util.List" %>
 <%
 // Security check - ensure user is logged in
 Integer adminId = (Integer) session.getAttribute("adminId");
 if (adminId == null) {
     response.sendRedirect(request.getContextPath() + "/login");
     return;
+}
+
+// Get organization type for this admin
+AdminDAO adminDAO = new AdminDAO();
+String organizationType = adminDAO.getOrganizationType(adminId);
+List<String> purposes = null;
+if (organizationType != null && !organizationType.isEmpty()) {
+    purposes = OrganizationPurposeHelper.getPurposesForOrganization(organizationType);
 }
 %>
 <!DOCTYPE html>
@@ -39,25 +50,60 @@ if (adminId == null) {
       };
     </script>
   </head>
-  <body class="font-display">
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-      <div class="layout-container flex h-full grow flex-col">
-        <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-slate-200 dark:border-b-slate-700 px-4 sm:px-6 lg:px-10 py-3">
-          <div class="flex items-center gap-4 text-slate-900 dark:text-white">
-            <span class="material-symbols-outlined text-primary text-2xl">qr_code_scanner</span>
-            <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Visitor Entry System</h2>
+  <body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="flex h-screen">
+      <!-- SideNavBar -->
+      <aside class="w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">qr_code_scanner</span>
+            <h1 class="text-lg font-bold">Visitor System</h1>
           </div>
-          <div class="flex flex-1 justify-end gap-2 sm:gap-4">
-            <a href="dashboard.jsp" class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 bg-slate-200/60 dark:bg-slate-700/60 text-slate-900 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 px-2.5">
-              <span class="material-symbols-outlined">home</span>
+        </div>
+        <nav class="flex-1 px-4 py-4">
+          <div class="flex flex-col gap-2">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="dashboard.jsp">
+              <span class="material-symbols-outlined">dashboard</span>
+              <p class="text-sm font-medium">Dashboard</p>
             </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="addVisitor.jsp">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">person_add</span>
+              <p class="text-sm font-semibold">Add Visitor</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/listVisitors">
+              <span class="material-symbols-outlined">list_alt</span>
+              <p class="text-sm font-medium">Visitor List</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="cleanLogs.jsp">
+              <span class="material-symbols-outlined">delete_sweep</span>
+              <p class="text-sm font-medium">Clean Old Logs</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/settings">
+              <span class="material-symbols-outlined">settings</span>
+              <p class="text-sm font-medium">Settings</p>
+            </a>
+          </div>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-3 mb-4">
             <div class="bg-primary/10 rounded-full size-10 flex items-center justify-center">
               <span class="material-symbols-outlined text-primary">person</span>
             </div>
+            <div class="flex flex-col">
+              <p class="text-slate-900 dark:text-white text-sm font-medium leading-normal"><%= session.getAttribute("adminUsername") != null ? session.getAttribute("adminUsername") : "Admin User" %></p>
+              <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal"><%= session.getAttribute("adminEmail") != null ? session.getAttribute("adminEmail") : "admin@example.com" %></p>
+            </div>
           </div>
-        </header>
+          <a href="<%= request.getContextPath() %>/logout" class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+            <span class="material-symbols-outlined text-base">logout</span>
+            <span class="text-sm font-medium">Logout</span>
+          </a>
+        </div>
+      </aside>
 
-        <main class="px-4 sm:px-6 lg:px-8 flex flex-1 justify-center py-8 sm:py-12">
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
           <div class="layout-content-container flex flex-col w-full max-w-2xl flex-1">
             <div class="flex flex-wrap justify-between gap-3 p-4">
               <p class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">Add New Visitor</p>
@@ -89,16 +135,31 @@ if (adminId == null) {
 
                 <div>
                   <h2 class="text-slate-800 dark:text-slate-200 text-sm font-medium leading-tight pb-2 pt-2">Purpose of Visit</h2>
-                  <div class="flex w-full flex-1 items-stretch rounded-lg mt-1">
-                    <input name="purpose" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="e.g. Meeting with Jane Smith" />
-                    <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center pr-[15px] rounded-r-lg border-l-0">
-                      <span class="material-symbols-outlined text-lg">edit_note</span>
+                  <% if (organizationType == null || organizationType.isEmpty()) { %>
+                  <div class="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mb-4">
+                    <div class="flex items-start">
+                      <span class="material-symbols-outlined text-yellow-600 mr-3">warning</span>
+                      <div>
+                        <p class="text-sm font-medium text-yellow-800">Organization Type Not Set</p>
+                        <p class="text-sm text-yellow-700 mt-1">Please set your organization type in <a href="<%= request.getContextPath() %>/settings" class="underline font-semibold">Settings</a> before adding visitors.</p>
+                      </div>
                     </div>
                   </div>
+                  <select name="purpose" required disabled class="form-select w-full h-12 rounded-lg border border-slate-300 dark:border-slate-600 bg-slate-100 dark:bg-slate-700 text-slate-400 px-4 cursor-not-allowed">
+                    <option value="">-- Set organization type first --</option>
+                  </select>
+                  <% } else { %>
+                  <select name="purpose" required class="form-select w-full h-12 rounded-lg border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 focus:border-primary px-4">
+                    <option value="">-- Select Purpose --</option>
+                    <% for (String purpose : purposes) { %>
+                    <option value="<%= purpose %>"><%= purpose %></option>
+                    <% } %>
+                  </select>
+                  <% } %>
                 </div>
 
                 <div class="flex flex-col sm:flex-row-reverse items-center gap-3 border-t border-slate-200 dark:border-slate-700 pt-6 mt-4">
-                  <button type="submit" class="flex w-full sm:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-primary text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-6 hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 dark:focus:ring-offset-background-dark transition-colors duration-150">Save Visitor</button>
+                  <button type="submit" <%= (organizationType == null || organizationType.isEmpty()) ? "disabled" : "" %> class="flex w-full sm:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 <%= (organizationType == null || organizationType.isEmpty()) ? "bg-slate-400 cursor-not-allowed" : "bg-primary hover:bg-primary/90" %> text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-6 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50 dark:focus:ring-offset-background-dark transition-colors duration-150">Save Visitor</button>
                   <a href="dashboard.jsp" class="flex w-full sm:w-auto cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 bg-transparent text-slate-600 dark:text-slate-300 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-6 hover:bg-slate-100 dark:hover:bg-slate-700/50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500/50 dark:focus:ring-offset-background-dark transition-colors duration-150"> Cancel </a>
                 </div>
               </form>

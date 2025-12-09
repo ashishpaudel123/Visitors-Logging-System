@@ -55,23 +55,60 @@ int serialNumber = 1;
         }
       </style>
     </head>
-    <body class="font-display bg-background-light dark:bg-background-dark text-[#0d121b] dark:text-gray-200">
-      <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-        <div class="layout-container flex h-full grow flex-col">
-          <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7ebf3] dark:border-gray-700 px-4 sm:px-6 lg:px-10 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-10">
-            <div class="flex items-center gap-4 text-[#0d121b] dark:text-white">
-              <span class="material-symbols-outlined text-primary text-3xl">database</span>
-              <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Visitor Logging System</h2>
+    <body class="font-display bg-background-light dark:bg-background-dark">
+      <div class="flex h-screen">
+        <!-- SideNavBar -->
+        <aside class="w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col">
+          <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">qr_code_scanner</span>
+              <h1 class="text-lg font-bold">Visitor System</h1>
             </div>
-            <div class="flex flex-1 justify-end gap-4 items-center">
-              <a href="pages/addVisitor.jsp" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] gap-2 hover:bg-primary/90 transition-colors">
-                <span class="material-symbols-outlined">add</span>
-                <span class="truncate">Add Visitor</span>
+          </div>
+          <nav class="flex-1 px-4 py-4">
+            <div class="flex flex-col gap-2">
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="pages/dashboard.jsp">
+                <span class="material-symbols-outlined">dashboard</span>
+                <p class="text-sm font-medium">Dashboard</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="pages/addVisitor.jsp">
+                <span class="material-symbols-outlined">person_add</span>
+                <p class="text-sm font-medium">Add Visitor</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="<%= request.getContextPath() %>/listVisitors">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">list_alt</span>
+                <p class="text-sm font-semibold">Visitor List</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="pages/cleanLogs.jsp">
+                <span class="material-symbols-outlined">delete_sweep</span>
+                <p class="text-sm font-medium">Clean Old Logs</p>
+              </a>
+              <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/settings">
+                <span class="material-symbols-outlined">settings</span>
+                <p class="text-sm font-medium">Settings</p>
               </a>
             </div>
-          </header>
+          </nav>
+          <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="bg-primary/10 rounded-full size-10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary">person</span>
+              </div>
+              <div class="flex flex-col">
+                <p class="text-slate-900 dark:text-white text-sm font-medium leading-normal"><%= session.getAttribute("adminUsername") != null ? session.getAttribute("adminUsername") : "Admin User" %></p>
+                <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal"><%= session.getAttribute("adminEmail") != null ? session.getAttribute("adminEmail") : "admin@example.com" %></p>
+              </div>
+            </div>
+            <a href="<%= request.getContextPath() %>/logout" class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+              <span class="material-symbols-outlined text-base">logout</span>
+              <span class="text-sm font-medium">Logout</span>
+            </a>
+          </div>
+        </aside>
 
-          <main class="px-4 sm:px-6 lg:px-10 flex flex-1 justify-center py-5">
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+          <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
             <div class="layout-content-container flex flex-col w-full max-w-7xl flex-1">
               <div class="flex flex-wrap justify-between items-center gap-4 py-4">
                 <p class="text-[#0d121b] dark:text-white text-3xl font-black leading-tight tracking-[-0.033em]">Visitor List</p>

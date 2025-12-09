@@ -63,21 +63,67 @@ String deletedCountParam = request.getParameter("count");
       }
     </style>
   </head>
-  <body class="font-display">
-    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden">
-      <div class="layout-container flex h-full grow flex-col">
-        <div class="flex flex-1 justify-center p-4 sm:p-6 md:p-8 lg:py-12 lg:px-40">
-          <div class="layout-content-container flex flex-col max-w-[960px] flex-1 gap-8">
+  <body class="font-display bg-background-light dark:bg-background-dark">
+    <div class="flex h-screen">
+      <!-- SideNavBar -->
+      <aside class="w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col">
+        <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">qr_code_scanner</span>
+            <h1 class="text-lg font-bold">Visitor System</h1>
+          </div>
+        </div>
+        <nav class="flex-1 px-4 py-4">
+          <div class="flex flex-col gap-2">
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="dashboard.jsp">
+              <span class="material-symbols-outlined">dashboard</span>
+              <p class="text-sm font-medium">Dashboard</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="addVisitor.jsp">
+              <span class="material-symbols-outlined">person_add</span>
+              <p class="text-sm font-medium">Add Visitor</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/listVisitors">
+              <span class="material-symbols-outlined">list_alt</span>
+              <p class="text-sm font-medium">Visitor List</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="cleanLogs.jsp">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">delete_sweep</span>
+              <p class="text-sm font-semibold">Clean Old Logs</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/settings">
+              <span class="material-symbols-outlined">settings</span>
+              <p class="text-sm font-medium">Settings</p>
+            </a>
+          </div>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="bg-primary/10 rounded-full size-10 flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary">person</span>
+            </div>
+            <div class="flex flex-col">
+              <p class="text-slate-900 dark:text-white text-sm font-medium leading-normal"><%= session.getAttribute("adminUsername") != null ? session.getAttribute("adminUsername") : "Admin User" %></p>
+              <p class="text-slate-500 dark:text-slate-400 text-xs font-normal leading-normal"><%= session.getAttribute("adminEmail") != null ? session.getAttribute("adminEmail") : "admin@example.com" %></p>
+            </div>
+          </div>
+          <a href="<%= request.getContextPath() %>/logout" class="flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+            <span class="material-symbols-outlined text-base">logout</span>
+            <span class="text-sm font-medium">Logout</span>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+          <div class="max-w-7xl mx-auto">
             <!-- Header -->
-            <div class="flex flex-wrap justify-between items-start gap-4">
+            <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
               <div class="flex flex-col gap-2">
                 <p class="text-slate-900 dark:text-slate-50 text-3xl sm:text-4xl font-black leading-tight tracking-[-0.033em]">Clean Old Logs</p>
                 <p class="text-slate-500 dark:text-slate-400 text-base font-normal leading-normal">Remove visitor entries older than a specific number of days.</p>
               </div>
-              <a href="dashboard.jsp" class="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
-                <span class="material-symbols-outlined text-xl">arrow_back</span>
-                <span>Back to Dashboard</span>
-              </a>
             </div>
 
             <!-- Stats Cards -->
