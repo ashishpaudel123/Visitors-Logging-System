@@ -13,6 +13,7 @@ if (adminId == null) {
 VisitorDAO dao = new VisitorDAO();
 List<Visitor> recentVisitors = dao.getVisitorsByAdmin(adminId);
 int totalVisitors = recentVisitors.size();
+int todayVisitors = dao.getTodayVisitorCount(adminId);
 List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subList(0, 5) : recentVisitors;
 %>
 <!DOCTYPE html>
@@ -137,7 +138,7 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                   <div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
                     <p class="text-slate-600 dark:text-slate-300 text-base font-medium leading-normal">Total Visitors Today</p>
-                    <p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight"><%= totalVisitors %></p>
+                    <p class="text-slate-900 dark:text-white tracking-tight text-3xl font-bold leading-tight"><%= todayVisitors %></p>
                   </div>
                   <div class="flex flex-col gap-2 rounded-xl p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40">
                     <p class="text-slate-600 dark:text-slate-300 text-base font-medium leading-normal">Total Visitors</p>

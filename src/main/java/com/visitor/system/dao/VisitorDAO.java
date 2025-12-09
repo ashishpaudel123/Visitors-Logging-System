@@ -80,6 +80,27 @@ public class VisitorDAO {
     }
 
     /**
+     * Get count of visitors added today for a specific admin
+     * 
+     * @param adminId The ID of the admin
+     * @return Count of visitors added today
+     */
+    public int getTodayVisitorCount(int adminId) {
+        String sql = "SELECT COUNT(*) as total FROM visitors WHERE admin_id = ? AND DATE(entry_time) = CURDATE()";
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, adminId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    /**
      * Get total visitor count for a specific admin only
      * 
      * @param adminId The ID of the admin
