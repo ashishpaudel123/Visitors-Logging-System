@@ -64,14 +64,20 @@ String deletedCountParam = request.getParameter("count");
     </style>
   </head>
   <body class="font-display bg-background-light dark:bg-background-dark">
+    <!-- Mobile Menu Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+    
     <div class="flex h-screen">
       <!-- SideNavBar -->
-      <aside class="w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col">
-        <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+      <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800">
           <div class="flex items-center gap-3 text-slate-900 dark:text-white">
             <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">qr_code_scanner</span>
             <h1 class="text-lg font-bold">Visitor System</h1>
           </div>
+          <button onclick="toggleSidebar()" class="lg:hidden p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="material-symbols-outlined">close</span>
+          </button>
         </div>
         <nav class="flex-1 px-4 py-4">
           <div class="flex flex-col gap-2">
@@ -116,7 +122,15 @@ String deletedCountParam = request.getParameter("count");
 
       <!-- Main Content -->
       <div class="flex-1 flex flex-col overflow-hidden">
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
+        <!-- Mobile Header -->
+        <header class="h-16 flex lg:hidden items-center justify-between border-b border-slate-200 dark:border-slate-800 px-4 bg-white dark:bg-background-dark">
+          <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+          <h2 class="text-slate-900 dark:text-white text-lg font-bold">Clean Logs</h2>
+          <div class="w-10"></div>
+        </header>
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-4 lg:p-8">
           <div class="max-w-7xl mx-auto">
             <!-- Header -->
             <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
@@ -233,6 +247,13 @@ String deletedCountParam = request.getParameter("count");
         document.getElementById("form-days").value = days;
         // Reload page with new days parameter to update count
         window.location.href = "cleanLogs.jsp?days=" + days;
+      }
+      
+      function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
       }
     </script>
   </body>

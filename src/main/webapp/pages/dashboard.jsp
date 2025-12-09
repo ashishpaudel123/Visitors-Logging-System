@@ -49,14 +49,20 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
         </script>
       </head>
       <body class="font-display bg-background-light dark:bg-background-dark">
+        <!-- Mobile Menu Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
+        
         <div class="flex h-screen">
           <!-- SideNavBar -->
-          <aside class="w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col">
-            <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
+          <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 w-64 flex-shrink-0 bg-white dark:bg-background-dark dark:border-r dark:border-slate-800 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+            <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200 dark:border-slate-800">
               <div class="flex items-center gap-3 text-slate-900 dark:text-white">
                 <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1">qr_code_scanner</span>
                 <h1 class="text-lg font-bold">Visitor System</h1>
               </div>
+              <button onclick="toggleSidebar()" class="lg:hidden p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+              </button>
             </div>
             <nav class="flex-1 px-4 py-4">
               <div class="flex flex-col gap-2">
@@ -102,8 +108,11 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
           <!-- Main Content -->
           <div class="flex-1 flex flex-col overflow-hidden">
             <!-- TopNavBar -->
-            <header class="h-16 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-8 bg-white dark:bg-background-dark">
+            <header class="h-16 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-4 lg:px-8 bg-white dark:bg-background-dark">
               <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <span class="material-symbols-outlined">menu</span>
+                </button>
                 <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Visitor Entry System</h2>
               </div>
               <div class="flex flex-1 justify-end gap-8">
@@ -183,7 +192,14 @@ List<Visitor> displayVisitors = recentVisitors.size() > 5 ? recentVisitors.subLi
             </main>
           </div>
         </div>
+        
+        <script>
+          function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+          }
+        </script>
       </body>
     </html>
-  </Visitor></Visitor
->
