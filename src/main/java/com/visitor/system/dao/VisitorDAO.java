@@ -256,7 +256,7 @@ public class VisitorDAO {
      */
     public List<Visitor> getVisitorsByAdminAndDays(int adminId, int days) {
         List<Visitor> list = new ArrayList<>();
-        String sql = "SELECT id, name, phone, purpose, entry_time, checkout_time, admin_id " +
+        String sql = "SELECT id, name, phone, purpose, entry_time " +
                 "FROM visitors WHERE admin_id = ? AND entry_time >= NOW() - INTERVAL ? DAY " +
                 "ORDER BY entry_time DESC";
 
@@ -273,10 +273,7 @@ public class VisitorDAO {
                         rs.getString("phone"),
                         rs.getString("purpose"),
                         rs.getString("entry_time"),
-                        rs.getInt("admin_id"));
-                // Set checkout time if available
-                String checkoutTime = rs.getString("checkout_time");
-                visitor.setCheckOut(checkoutTime);
+                        adminId);
                 list.add(visitor);
             }
         } catch (Exception e) {
