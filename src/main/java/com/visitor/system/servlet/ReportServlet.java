@@ -113,15 +113,11 @@ public class ReportServlet extends HttpServlet {
         String filename = "visitor_report_last_" + days + "_days.csv";
         res.setHeader("Content-Disposition", "attachment; filename=\"" + filename + "\"");
 
-        // Write UTF-8 BOM for Excel compatibility
-        res.getOutputStream().write(0xEF);
-        res.getOutputStream().write(0xBB);
-        res.getOutputStream().write(0xBF);
-
-        PrintWriter writer = new PrintWriter(res.getOutputStream(), true, StandardCharsets.UTF_8);
+        // Get the writer directly (UTF-8 BOM can be added via getWriter)
+        PrintWriter writer = res.getWriter();
 
         // Write CSV header
-        writer.println("Visitor ID,Visitor Name,Phone Number,Purpose,Check-in Date,Check-out Date,Admin ID");
+        writer.println("Visitor ID,Visitor Name,Phone Number,Purpose,Check-in Date");
 
         // Write visitor data
         for (Visitor visitor : visitors) {
@@ -130,14 +126,11 @@ public class ReportServlet extends HttpServlet {
             row.append(escapeCSV(visitor.getName())).append(",");
             row.append(escapeCSV(visitor.getPhone())).append(",");
             row.append(escapeCSV(visitor.getPurpose())).append(",");
-            row.append(escapeCSV(visitor.getCheckIn())).append(",");
-            row.append(escapeCSV(visitor.getCheckOut() != null ? visitor.getCheckOut() : "N/A")).append(",");
-            row.append(visitor.getAdminId());
+            row.append(escapeCSV(visitor.getCheckIn()));
             writer.println(row.toString());
         }
 
         writer.flush();
-        writer.close();
     }
 
     /**
