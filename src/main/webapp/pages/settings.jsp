@@ -121,8 +121,8 @@ List<String> organizationTypes = OrganizationPurposeHelper.getAllOrganizationTyp
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-[#0e151b]">Settings</h2>
-                <p class="text-gray-600 mt-2">Configure your organization type to customize visitor purposes</p>
+                <h2 class="text-3xl font-bold text-[#0e151b] dark:text-white">Settings</h2>
+                <p class="text-gray-600 dark:text-gray-400 mt-2">Configure your organization type to customize visitor purposes</p>
             </div>
 
             <!-- Success/Error Messages -->
@@ -145,16 +145,16 @@ List<String> organizationTypes = OrganizationPurposeHelper.getAllOrganizationTyp
             <% } %>
 
             <!-- Settings Form -->
-            <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="bg-white dark:bg-[#192231] rounded-xl shadow-lg p-8">
                 <form method="POST" action="<%= request.getContextPath() %>/settings">
                     <div class="mb-6">
-                        <label for="organizationType" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="organizationType" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Organization Type
                         </label>
                         <select 
                             id="organizationType" 
                             name="organizationType" 
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                            class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                             required>
                             <option value="">-- Select Organization Type --</option>
                             <% for (String orgType : organizationTypes) { %>
@@ -163,18 +163,18 @@ List<String> organizationTypes = OrganizationPurposeHelper.getAllOrganizationTyp
                             </option>
                             <% } %>
                         </select>
-                        <p class="mt-2 text-sm text-gray-500">
+                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                             This will determine the available visitor purpose options in the Add Visitor form.
                         </p>
                     </div>
 
                     <% if (currentOrgType != null && !currentOrgType.isEmpty()) { %>
-                    <div class="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div class="mb-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
                         <div class="flex items-start">
-                            <span class="material-symbols-outlined text-blue-500 mr-3 mt-0.5">info</span>
+                            <span class="material-symbols-outlined text-blue-500 dark:text-blue-400 mr-3 mt-0.5">info</span>
                             <div>
-                                <p class="text-sm text-blue-800 font-medium">Current Organization: <%= currentOrgType %></p>
-                                <p class="text-sm text-blue-700 mt-1">
+                                <p class="text-sm text-blue-800 dark:text-blue-300 font-medium">Current Organization: <%= currentOrgType %></p>
+                                <p class="text-sm text-blue-700 dark:text-blue-400 mt-1">
                                     Changing your organization type will update the purpose options available when adding new visitors.
                                 </p>
                             </div>
@@ -193,7 +193,7 @@ List<String> organizationTypes = OrganizationPurposeHelper.getAllOrganizationTyp
                         </button>
                         <a 
                             href="<%= request.getContextPath() %>/dashboard" 
-                            class="px-6 py-3 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-all">
+                            class="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-all">
                             Cancel
                         </a>
                     </div>
@@ -201,12 +201,12 @@ List<String> organizationTypes = OrganizationPurposeHelper.getAllOrganizationTyp
             </div>
 
             <!-- Information Card -->
-            <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
-                <h3 class="text-lg font-semibold text-[#0e151b] mb-4 flex items-center">
+            <div class="mt-8 bg-white dark:bg-[#192231] rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-semibold text-[#0e151b] dark:text-white mb-4 flex items-center">
                     <span class="material-symbols-outlined text-primary mr-2">help</span>
                     About Organization Types
                 </h3>
-                <div class="space-y-3 text-sm text-gray-600">
+                <div class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                     <p>Each organization type has a specific set of visitor purposes tailored to its needs:</p>
                     <ul class="list-disc list-inside space-y-2 ml-4">
                         <li><strong>Bank:</strong> Account opening, deposits, withdrawals, loan services, etc.</li>
