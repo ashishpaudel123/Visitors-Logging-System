@@ -72,8 +72,19 @@
               </div>
               <% } %>
 
-              <!-- Success Message (for redirects after logout) -->
-              <% String message = request.getParameter("message"); if (message != null && "logout".equals(message)) { %>
+              <!-- Success Message (for redirects after logout or password reset) -->
+              <% String message = request.getParameter("message"); 
+                 String passwordResetSuccess = (String) session.getAttribute("passwordResetSuccess");
+                 if (passwordResetSuccess != null) {
+                   session.removeAttribute("passwordResetSuccess");
+              %>
+              <div class="w-full p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-green-600 dark:text-green-400">check_circle</span>
+                  <p class="text-sm text-green-800 dark:text-green-300"><%= passwordResetSuccess %></p>
+                </div>
+              </div>
+              <% } else if (message != null && "logout".equals(message)) { %>
               <div class="w-full p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
                 <div class="flex items-center gap-2">
                   <span class="material-symbols-outlined text-green-600 dark:text-green-400">check_circle</span>
@@ -107,7 +118,7 @@
                   </div>
                 </label>
 
-                <a class="text-primary text-sm font-medium text-right leading-normal hover:underline" href="#"> Forgot password? </a>
+                <a class="text-primary text-sm font-medium text-right leading-normal hover:underline" href="<%= request.getContextPath() %>/forgot-password"> Forgot password? </a>
 
                 <button type="submit" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-wide hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-background-dark transition-colors duration-200 mt-2">
                   <span class="truncate">Login</span>
