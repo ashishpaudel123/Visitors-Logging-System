@@ -1,32 +1,32 @@
 <web-app>
- <welcome-file-list>
-  <welcome-file>index.jsp</welcome-file>
- </welcome-file-list>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 
- <servlet>
-  <servlet-name>AddVisitor</servlet-name>
-  <servlet-class>com.visitor.system.servlet.AddVisitorServlet</servlet-class>
- </servlet>
- <servlet-mapping>
-  <servlet-name>AddVisitor</servlet-name>
-  <url-pattern>/addVisitor</url-pattern>
- </servlet-mapping>
+    <servlet>
+        <servlet-name>AddVisitor</servlet-name>
+        <servlet-class>com.visitor.system.servlet.AddVisitorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddVisitor</servlet-name>
+        <url-pattern>/addVisitor</url-pattern>
+    </servlet-mapping>
 
- <servlet>
-  <servlet-name>ListVisitors</servlet-name>
-  <servlet-class>com.visitor.system.servlet.ListVisitorsServlet</servlet-class>
- </servlet>
- <servlet-mapping>
-  <servlet-name>ListVisitors</servlet-name>
-  <url-pattern>/listVisitors</url-pattern>
- </servlet-mapping>
+    <servlet>
+        <servlet-name>ListVisitors</servlet-name>
+        <servlet-class>com.visitor.system.servlet.ListVisitorsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListVisitors</servlet-name>
+        <url-pattern>/listVisitors</url-pattern>
+    </servlet-mapping>
 
- <servlet>
-  <servlet-name>CleanLogs</servlet-name>
-  <servlet-class>com.visitor.system.servlet.CleanLogsServlet</servlet-class>
- </servlet>
- <servlet-mapping>
-  <servlet-name>CleanLogs</servlet-name>
-  <url-pattern>/cleanLogs</url-pattern>
- </servlet-mapping>
+    <servlet>
+        <servlet-name>CleanLogs</servlet-name>
+        <servlet-class>com.visitor.system.servlet.CleanLogsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CleanLogs</servlet-name>
+        <url-pattern>/cleanLogs</url-pattern>
+    </servlet-mapping>
 </web-app>

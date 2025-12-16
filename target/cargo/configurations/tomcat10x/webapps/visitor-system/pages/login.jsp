@@ -116,7 +116,7 @@
                 <div class="text-center">
                   <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">
                     Don't have an account?
-                    <a href="register.jsp" class="text-primary font-medium hover:underline">Register here</a>
+                    <a href="<%= request.getContextPath() %>/register" class="text-primary font-medium hover:underline">Register here</a>
                   </p>
                 </div>
               </form>
@@ -142,6 +142,11 @@
           passwordInput.type = "password";
           visibilityIcon.textContent = "visibility";
         }
+      }
+
+      // Dark mode toggle (check system preference)
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
       }
     </script>
   </body>

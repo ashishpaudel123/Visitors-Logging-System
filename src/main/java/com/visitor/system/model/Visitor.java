@@ -6,6 +6,7 @@ public class Visitor {
     private String phone;
     private String purpose;
     private String checkIn;
+    private String checkOut;
     private int adminId;
 
     public Visitor(int id, String name, String phone, String purpose, String checkIn, int adminId) {
@@ -45,6 +46,10 @@ public class Visitor {
         return checkIn;
     }
 
+    public String getCheckOut() {
+        return checkOut;
+    }
+
     public int getAdminId() {
         return adminId;
     }
@@ -68,6 +73,10 @@ public class Visitor {
 
     public void setCheckIn(String checkIn) {
         this.checkIn = checkIn;
+    }
+
+    public void setCheckOut(String checkOut) {
+        this.checkOut = checkOut;
     }
 
     public void setAdminId(int adminId) {

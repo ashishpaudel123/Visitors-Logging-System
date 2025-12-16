@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = { "/pages/dashboard.jsp", "/pages/visitors.jsp", "/pages/addVisitor.jsp",
-        "/pages/cleanLogs.jsp" })
+        "/pages/cleanLogs.jsp", "/pages/report.jsp" })
 public class AuthFilter implements Filter {
 
     @Override

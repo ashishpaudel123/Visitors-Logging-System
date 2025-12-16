@@ -199,37 +199,37 @@ public class VisitorDAO {
     public List<Visitor> getFilteredVisitors(int adminId, String searchTerm, String purposeFilter) {
         List<Visitor> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT * FROM visitors WHERE admin_id = ?");
-        
+
         boolean hasSearch = searchTerm != null && !searchTerm.trim().isEmpty();
-        boolean hasPurpose = purposeFilter != null && !purposeFilter.trim().isEmpty() 
-                             && !"all".equalsIgnoreCase(purposeFilter);
-        
+        boolean hasPurpose = purposeFilter != null && !purposeFilter.trim().isEmpty()
+                && !"all".equalsIgnoreCase(purposeFilter);
+
         if (hasSearch) {
             sql.append(" AND (name LIKE ? OR phone LIKE ?)");
         }
-        
+
         if (hasPurpose) {
             sql.append(" AND purpose = ?");
         }
-        
+
         sql.append(" ORDER BY entry_time DESC");
-        
+
         try (Connection con = DBConnection.getConnection();
                 PreparedStatement ps = con.prepareStatement(sql.toString())) {
-            
+
             int paramIndex = 1;
             ps.setInt(paramIndex++, adminId);
-            
+
             if (hasSearch) {
                 String searchPattern = "%" + searchTerm.trim() + "%";
                 ps.setString(paramIndex++, searchPattern);
                 ps.setString(paramIndex++, searchPattern);
             }
-            
+
             if (hasPurpose) {
                 ps.setString(paramIndex++, purposeFilter.trim());
             }
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new Visitor(
@@ -239,6 +239,45 @@ public class VisitorDAO {
                         rs.getString("purpose"),
                         rs.getString("entry_time"),
                         rs.getInt("admin_id")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    /**
+     * Get visitors for a specific admin within the last N days
+     * Used for generating visitor reports with date-based filtering
+     * 
+     * @param adminId The ID of the admin whose visitors to retrieve
+     * @param days    Number of days to look back from current date
+     * @return List of visitors belonging to this admin within the date range
+     */
+    public List<Visitor> getVisitorsByAdminAndDays(int adminId, int days) {
+        List<Visitor> list = new ArrayList<>();
+        String sql = "SELECT id, name, phone, purpose, entry_time, checkout_time, admin_id " +
+                "FROM visitors WHERE admin_id = ? AND entry_time >= NOW() - INTERVAL ? DAY " +
+                "ORDER BY entry_time DESC";
+
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, adminId);
+            ps.setInt(2, days);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Visitor visitor = new Visitor(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("purpose"),
+                        rs.getString("entry_time"),
+                        rs.getInt("admin_id"));
+                // Set checkout time if available
+                String checkoutTime = rs.getString("checkout_time");
+                visitor.setCheckOut(checkoutTime);
+                list.add(visitor);
             }
         } catch (Exception e) {
             e.printStackTrace();

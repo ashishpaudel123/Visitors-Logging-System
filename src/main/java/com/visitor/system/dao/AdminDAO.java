@@ -169,4 +169,34 @@ public class AdminDAO {
 
         return false;
     }
+
+    /**
+     * Verify if the provided password matches the stored password for the admin
+     * This is used for re-authentication before sensitive operations
+     * 
+     * @param adminId  The ID of the admin
+     * @param password The password to verify (will be compared against stored hash)
+     * @return true if password matches, false otherwise
+     */
+    public boolean verifyPassword(int adminId, String password) {
+        String query = "SELECT password FROM admins WHERE id = ?";
+
+        try (Connection con = DBConnection.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, adminId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String storedPassword = rs.getString("password");
+                    // Compare passwords (both should be hashed in production)
+                    return storedPassword != null && storedPassword.equals(password);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

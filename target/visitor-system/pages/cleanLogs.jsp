@@ -97,6 +97,10 @@ String deletedCountParam = request.getParameter("count");
               <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">delete_sweep</span>
               <p class="text-sm font-semibold">Clean Old Logs</p>
             </a>
+            <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/report">
+              <span class="material-symbols-outlined">download</span>
+              <p class="text-sm font-medium">Download Report</p>
+            </a>
             <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" href="<%= request.getContextPath() %>/settings">
               <span class="material-symbols-outlined">settings</span>
               <p class="text-sm font-medium">Settings</p>
@@ -254,6 +258,11 @@ String deletedCountParam = request.getParameter("count");
         const overlay = document.getElementById('sidebar-overlay');
         sidebar.classList.toggle('-translate-x-full');
         overlay.classList.toggle('hidden');
+      }
+
+      // Dark mode toggle (check system preference)
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
       }
     </script>
   </body>
