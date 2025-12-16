@@ -114,11 +114,6 @@ String success = request.getParameter("success");
                     </button>
                     <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Visitor Report</h2>
                 </div>
-                <div class="flex flex-1 justify-end gap-8">
-                    <div class="bg-primary/10 rounded-full size-10 ring-2 ring-offset-2 ring-offset-white dark:ring-offset-background-dark ring-primary flex items-center justify-center">
-                        <span class="material-symbols-outlined text-primary">person</span>
-                    </div>
-                </div>
             </header>
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
