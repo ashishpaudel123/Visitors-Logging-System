@@ -137,7 +137,7 @@
                 <div class="text-center">
                   <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">
                     Already have an account?
-                    <a href="login.jsp" class="text-primary font-medium hover:underline">Login here</a>
+                    <a href="login" class="text-primary font-medium hover:underline">Login here</a>
                   </p>
                 </div>
               </form>

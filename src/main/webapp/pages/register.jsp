@@ -137,7 +137,7 @@
                 <div class="text-center">
                   <p class="text-text-secondary-light dark:text-text-secondary-dark text-sm">
                     Already have an account?
-                    <a href="login.jsp" class="text-primary font-medium hover:underline">Login here</a>
+                    <a href="login" class="text-primary font-medium hover:underline">Login here</a>
                   </p>
                 </div>
               </form>
@@ -147,7 +147,7 @@
       </main>
 
       <footer class="w-full p-4 text-center">
-        <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Bank-level secure system. Powered by Visitor Entry System.</p>
+        <p class="text-xs text-text-secondary-light dark:text-text-secondary-dark">Visitor Entry Logging System.</p>
       </footer>
     </div>
 
