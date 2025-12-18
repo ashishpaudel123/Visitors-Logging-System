@@ -43,8 +43,30 @@
   </head>
   <body class="font-display bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark">
     <div class="relative flex min-h-screen w-full flex-col group/design-root overflow-hidden">
-      <header class="absolute top-0 left-0 w-full p-4 md:px-8 md:py-6">
+      <header class="absolute top-0 left-0 w-full p-4 md:px-8 md:py-6 flex justify-between items-center">
         <h1 class="text-sm md:text-base font-medium text-text-secondary-light dark:text-text-secondary-dark">Visitor Entry System – Admin Registration</h1>
+        <div class="relative">
+          <button onclick="toggleThemeMenu()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+            <span id="theme-icon" class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">light_mode</span>
+          </button>
+          <div id="theme-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-2 z-50">
+            <button onclick="setTheme('light')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+              <span class="material-symbols-outlined text-lg">light_mode</span>
+              <span class="text-sm font-medium">Light</span>
+              <span id="check-light" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+            </button>
+            <button onclick="setTheme('dark')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+              <span class="material-symbols-outlined text-lg">dark_mode</span>
+              <span class="text-sm font-medium">Dark</span>
+              <span id="check-dark" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+            </button>
+            <button onclick="setTheme('system')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+              <span class="material-symbols-outlined text-lg">computer</span>
+              <span class="text-sm font-medium">System</span>
+              <span id="check-system" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+            </button>
+          </div>
+        </div>
       </header>
 
       <main class="flex h-full grow flex-col">

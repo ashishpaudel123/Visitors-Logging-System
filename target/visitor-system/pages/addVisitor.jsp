@@ -113,13 +113,39 @@ if (organizationType != null && !organizationType.isEmpty()) {
 
       <!-- Main Content -->
       <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Mobile Header -->
-        <header class="h-16 flex lg:hidden items-center justify-between border-b border-slate-200 dark:border-slate-800 px-4 bg-white dark:bg-background-dark">
-          <button onclick="toggleSidebar()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
-            <span class="material-symbols-outlined">menu</span>
-          </button>
-          <h2 class="text-slate-900 dark:text-white text-lg font-bold">Add Visitor</h2>
-          <div class="w-10"></div>
+        <!-- TopNavBar -->
+        <header class="h-16 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-4 lg:px-8 bg-white dark:bg-background-dark">
+          <div class="flex items-center gap-4">
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Add Visitor</h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-4 items-center">
+            <div class="relative">
+              <button onclick="toggleThemeMenu()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span id="theme-icon" class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">light_mode</span>
+              </button>
+              <!-- Theme Menu -->
+              <div id="theme-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-2 z-50">
+                <button onclick="setTheme('light')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                  <span class="material-symbols-outlined text-lg">light_mode</span>
+                  <span class="text-sm font-medium">Light</span>
+                  <span id="check-light" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                </button>
+                <button onclick="setTheme('dark')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                  <span class="material-symbols-outlined text-lg">dark_mode</span>
+                  <span class="text-sm font-medium">Dark</span>
+                  <span id="check-dark" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                </button>
+                <button onclick="setTheme('system')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                  <span class="material-symbols-outlined text-lg">computer</span>
+                  <span class="text-sm font-medium">System</span>
+                  <span id="check-system" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </header>
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-4 lg:p-8">
           <div class="layout-content-container flex flex-col w-full max-w-2xl flex-1">
@@ -158,8 +184,8 @@ if (organizationType != null && !organizationType.isEmpty()) {
                   <label class="flex flex-col flex-1">
                     <p class="text-slate-800 dark:text-slate-200 text-sm font-medium leading-normal pb-2">Full Name</p>
                     <div class="flex w-full flex-1 items-stretch rounded-lg">
-                      <input name="name" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="John Doe" />
-                      <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center pr-[15px] rounded-r-lg border-l-0">
+                      <input name="name" required class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] border-r-0 text-base font-normal leading-normal" placeholder="John Doe" />
+                      <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center px-3 rounded-r-lg border-l-0 h-12">
                         <span class="material-symbols-outlined text-lg">person</span>
                       </div>
                     </div>
@@ -168,8 +194,8 @@ if (organizationType != null && !organizationType.isEmpty()) {
                   <label class="flex flex-col flex-1">
                     <p class="text-slate-800 dark:text-slate-200 text-sm font-medium leading-normal pb-2">Phone Number</p>
                     <div class="flex w-full flex-1 items-stretch rounded-lg">
-                      <input name="phone" required type="tel" maxlength="10" pattern="[0-9]{10}" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal" placeholder="9876543210" />
-                      <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center pr-[15px] rounded-r-lg border-l-0">
+                      <input name="phone" required type="tel" maxlength="10" pattern="[0-9]{10}" title="Please enter exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark focus:border-primary h-12 placeholder:text-slate-400 p-[15px] border-r-0 text-base font-normal leading-normal" placeholder="9876543210" />
+                      <div class="text-slate-400 flex border border-slate-300 dark:border-slate-600 bg-background-light dark:bg-background-dark items-center justify-center px-3 rounded-r-lg border-l-0">
                         <span class="material-symbols-outlined text-lg">phone</span>
                       </div>
                     </div>
@@ -221,10 +247,81 @@ if (organizationType != null && !organizationType.isEmpty()) {
         overlay.classList.toggle('hidden');
       }
 
-      // Dark mode toggle (check system preference)
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.classList.add('dark');
+      // Theme Management
+      function getThemePreference() {
+        const stored = localStorage.getItem('theme');
+        return stored || 'system';
       }
+
+      function applyTheme(theme) {
+        const html = document.documentElement;
+        const themeIcon = document.getElementById('theme-icon');
+        
+        // Remove all checkmarks
+        document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+        
+        if (theme === 'system') {
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          html.classList.toggle('dark', prefersDark);
+          if (themeIcon) {
+            themeIcon.textContent = 'computer';
+            themeIcon.style.color = '#3b82f6';
+          }
+          document.getElementById('check-system')?.classList.remove('hidden');
+        } else if (theme === 'dark') {
+          html.classList.add('dark');
+          if (themeIcon) {
+            themeIcon.textContent = 'dark_mode';
+            themeIcon.style.color = '#fbbf24';
+          }
+          document.getElementById('check-dark')?.classList.remove('hidden');
+        } else {
+          html.classList.remove('dark');
+          if (themeIcon) {
+            themeIcon.textContent = 'light_mode';
+            themeIcon.style.color = '#fbbf24';
+          }
+          document.getElementById('check-light')?.classList.remove('hidden');
+        }
+      }
+
+      function setTheme(theme) {
+        localStorage.setItem('theme', theme);
+        applyTheme(theme);
+        document.getElementById('theme-menu')?.classList.add('hidden');
+      }
+
+      function toggleThemeMenu() {
+        const menu = document.getElementById('theme-menu');
+        if (menu) {
+          menu.classList.toggle('hidden');
+        }
+      }
+
+      // Initialize theme on load
+      document.addEventListener('DOMContentLoaded', () => {
+        const theme = getThemePreference();
+        applyTheme(theme);
+      });
+
+      // Apply theme immediately
+      applyTheme(getThemePreference());
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        const menu = document.getElementById('theme-menu');
+        const button = e.target.closest('button');
+        if (menu && !menu.contains(e.target) && (!button || button.getAttribute('onclick') !== 'toggleThemeMenu()')) {
+          menu.classList.add('hidden');
+        }
+      });
+
+      // Listen for system theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (getThemePreference() === 'system') {
+          applyTheme('system');
+        }
+      });
     </script>
   </body>
 </html>

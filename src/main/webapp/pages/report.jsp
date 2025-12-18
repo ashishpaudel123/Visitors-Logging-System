@@ -114,6 +114,31 @@ String success = request.getParameter("success");
                     </button>
                     <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Visitor Report</h2>
                 </div>
+                <div class="flex flex-1 justify-end gap-4 items-center">
+                    <div class="relative">
+                        <button onclick="toggleThemeMenu()" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span id="theme-icon" class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">light_mode</span>
+                        </button>
+                        <!-- Theme Menu -->
+                        <div id="theme-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 py-2 z-50">
+                            <button onclick="setTheme('light')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <span class="material-symbols-outlined text-lg">light_mode</span>
+                                <span class="text-sm font-medium">Light</span>
+                                <span id="check-light" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                            </button>
+                            <button onclick="setTheme('dark')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <span class="material-symbols-outlined text-lg">dark_mode</span>
+                                <span class="text-sm font-medium">Dark</span>
+                                <span id="check-dark" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                            </button>
+                            <button onclick="setTheme('system')" class="w-full px-4 py-2 text-left hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center gap-3 text-slate-700 dark:text-slate-300">
+                                <span class="material-symbols-outlined text-lg">computer</span>
+                                <span class="text-sm font-medium">System</span>
+                                <span id="check-system" class="material-symbols-outlined text-primary ml-auto hidden" style="font-variation-settings: 'FILL' 1">check</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </header>
 
             <main class="flex-1 overflow-x-hidden overflow-y-auto bg-background-light dark:bg-background-dark p-8">
@@ -298,24 +323,76 @@ String success = request.getParameter("success");
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
         }
 
         function setDays(days) {
             document.getElementById('days').value = days;
         }
 
-        // Dark mode toggle (check system preference)
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
+        // Theme Management
+        function getThemePreference() {
+            const stored = localStorage.getItem('theme');
+            return stored || 'system';
         }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            document.querySelectorAll('[id^="check-"]').forEach(el => el.classList.add('hidden'));
+            
+            if (theme === 'system') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.classList.toggle('dark', prefersDark);
+                if (themeIcon) {
+                    themeIcon.textContent = 'computer';
+                    themeIcon.style.color = '#3b82f6';
+                }
+                document.getElementById('check-system')?.classList.remove('hidden');
+            } else if (theme === 'dark') {
+                html.classList.add('dark');
+                if (themeIcon) {
+                    themeIcon.textContent = 'dark_mode';
+                    themeIcon.style.color = '#fbbf24';
+                }
+                document.getElementById('check-dark')?.classList.remove('hidden');
+            } else {
+                html.classList.remove('dark');
+                if (themeIcon) {
+                    themeIcon.textContent = 'light_mode';
+                    themeIcon.style.color = '#fbbf24';
+                }
+                document.getElementById('check-light')?.classList.remove('hidden');
+            }
+        }
+
+        function setTheme(theme) {
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
+            document.getElementById('theme-menu')?.classList.add('hidden');
+        }
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('theme-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => applyTheme(getThemePreference()));
+        applyTheme(getThemePreference());
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('theme-menu');
+            const button = e.target.closest('button');
+            if (menu && !menu.contains(e.target) && (!button || button.getAttribute('onclick') !== 'toggleThemeMenu()')) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+            if (getThemePreference() === 'system') applyTheme('system');
+        });
     </script>
 </body>
 </html>
